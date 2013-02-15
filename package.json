@@ -1,0 +1,21 @@
+{
+    "name": "cryptonite",
+    "version": "0.0.1",
+    "description": "Simple encryption & decryption and signing of objects for node.js",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/codefather/cryptonite.git"
+    },
+    "homepage": "https://github.com/codefather/cryptonite",
+    "keywords": [
+        "encryption",
+        "decryption",
+        "security",
+        "secure signing",
+        "tampering",
+        "secure cookie values"
+    ],
+    "author": "Tadeusz Wójcik <tadeusz@codefather.io>",
+    "license": "MIT"
+}
