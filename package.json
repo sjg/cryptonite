@@ -1,7 +1,7 @@
 {
     "name": "cryptonite",
     "version": "0.0.1",
-    "description": "Simple encryption & decryption and signing of objects for node.js",
+    "description": "Encryption & decryption and signing of objects for node.js made simple",
     "main": "index.js",
     "repository": {
         "type": "git",
