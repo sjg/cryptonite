@@ -6,7 +6,7 @@ It's slim wrapper on top of node.js library. Useful for for example secure stori
 ## Example
 example for express js cookies
 ```js
-var Cryptonite = require('./cryptonite');
+var Cryptonite = require('cryptonite');
 var cookie = require('cookie');
 
 var cryptonite = new Cryptonite({
