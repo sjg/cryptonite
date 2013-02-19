@@ -39,11 +39,15 @@ Cryptonite.prototype.decrypt = function (encryptedObject) {
 
     var decipher = crypto.createDecipher(this.options.cryptoAlgorithm, this.options.cryptoSecret);
 
-    var serializedDecryptedValue = decipher.update(encryptedObject, this.options.encoding, 'utf8');
+    var serializedDecryptedValue;
 
-    serializedDecryptedValue += decipher.final(this.options.encoding);
-
-
+    try {
+        serializedDecryptedValue = decipher.update(encryptedObject, this.options.encoding,
+                                                   'utf8');
+        serializedDecryptedValue += decipher.final(this.options.encoding);
+    } catch (e) {
+        return;
+    }
 
     var encryptedArray = serializedDecryptedValue.split(this.options.delimiter);
     var serializedObject = encryptedArray[0];
