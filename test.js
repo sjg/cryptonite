@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var Cryptonite = require('cryptonite');
+var Cryptonite = require('./index.js');
 
 cryptonite = new Cryptonite({
                                     cryptoSecret: "0a841f77-d798-e8f5-9e9f-9a8be3b17252",

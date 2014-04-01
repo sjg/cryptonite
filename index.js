@@ -8,9 +8,9 @@ function Cryptonite(options) {
     if (!this.options.cryptoSecret) this.options.cryptoSecret = 'please change me';
     if (!this.options.cryptoAlgorithm) this.options.cryptoAlgorithm = 'aes-256-cbc';
     if (!this.options.signingSecret) this.options.signingSecret = 'please change me';
-    if (!this.options.signingAlgorithm) this.options.signingAlgorithm = 'SHA256';
-    if (!this.options.encoding) this.options.output_encoding = 'sha256';  // base64 | may need changing to hex for https://github.com/joyent/node/issues/738/ seems fine in 0.10.26
-    if (!this.options.encoding) this.options.input_encoding = 'utf-8';
+    if (!this.options.signingAlgorithm) this.options.signingAlgorithm = 'sha256';
+    if (!this.options.encoding) this.options.outputEncoding = 'base64';  // base64 | may need changing to hex for https://github.com/joyent/node/issues/738/ seems fine in 0.10.26
+    if (!this.options.encoding) this.options.inputEncoding = 'utf-8';
     if (!this.options.delimiter) this.options.delimiter = '|';
 }
 
@@ -22,14 +22,14 @@ Cryptonite.prototype.encrypt = function (object) {
     var objectDigest = crypto
         .createHmac(this.options.signingAlgorithm, this.options.signingSecret)
         .update(serializedObject)
-        .digest(this.options.output_encoding);
+        .digest(this.options.outputEncoding);
 
     var toEncrypt = serializedObject + this.options.delimiter + objectDigest;
 
     var cipher = crypto.createCipher(this.options.cryptoAlgorithm, this.options.cryptoSecret);
 
-    var encrypted = cipher.update(toEncrypt, this.options.input_encoding, this.options.output_encoding);
-    encrypted += cipher.final(this.options.output_encoding);
+    var encrypted = cipher.update(toEncrypt, this.options.inputEncoding, this.options.outputEncoding);
+    encrypted += cipher.final(this.options.outputEncoding);
     return encrypted;
 };
 
@@ -42,8 +42,8 @@ Cryptonite.prototype.decrypt = function (encryptedObject) {
     var serializedDecryptedValue;
 
     try {
-        serializedDecryptedValue = decipher.update(encryptedObject, this.options.output_encoding, this.options.input_encoding);
-        serializedDecryptedValue += decipher.final(this.options.input_encoding);
+        serializedDecryptedValue = decipher.update(encryptedObject, this.options.outputEncoding, this.options.inputEncoding);
+        serializedDecryptedValue += decipher.final(this.options.inputEncoding);
     } catch (e) {
         console.log("Error: " + e);
         return;
@@ -56,7 +56,7 @@ Cryptonite.prototype.decrypt = function (encryptedObject) {
     var computedDigest = crypto
         .createHmac(this.options.signingAlgorithm, this.options.signingSecret)
         .update(serializedObject)
-        .digest(this.options.output_encoding);
+        .digest(this.options.outputEncoding);
 
     if (storedDigest !== computedDigest) return;
 
